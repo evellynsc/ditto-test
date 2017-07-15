@@ -1,4 +1,4 @@
 # ditto-test
 
+- Simple todo tasks system
 - Using pgsql db driver
-- Using auth scaffold from Laravel
