@@ -11,10 +11,22 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::get('/register', 'RegistrationController@create');
+Route::post('/register', 'RegistrationController@store');
+
+Route::get('login', ['as' => 'login', 'uses' => 'SessionsController@create']);
+Route::post('/login', 'SessionsController@store');
+Route::post('/logout', 'SessionsController@destroy');
+
+
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', 'TasksController@index');
 });
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/tasks', 'TasksController@index')->name('home');
+Route::get('/tasks/create', 'TasksController@create');
+Route::post('/tasks', 'TasksController@store');
+Route::get('/tasks/{id}', 'TasksController@show');
+Route::patch('/tasks/done/{id}', 'TasksController@done');
